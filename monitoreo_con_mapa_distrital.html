@@ -110,8 +110,11 @@ async function initDistrictMap(){
     warning.hidden=false;warning.textContent='No se pudo cargar Leaflet. Verifique la conexión a Internet; el resto del tablero sigue funcionando.';return;
   }
   districtMap=L.map('districtMap',{scrollWheelZoom:false,zoomControl:true,attributionControl:true}).setView([-11.99,-77.12],10);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
-    attribution:'&copy; OpenStreetMap contributors &copy; CARTO',maxZoom:18,subdomains:'abcd'
+  // Mapa base OpenStreetMap Standard: no exige clave API para visualizacion ordinaria.
+  // Los poligonos se consultan independientemente desde ArcGIS Online.
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a>',
+    maxZoom:19, maxNativeZoom:19
   }).addTo(districtMap);
   try{
     const params=new URLSearchParams({where:'1=1',outFields:'*',returnGeometry:'true',outSR:'4326',f:'geojson'});
